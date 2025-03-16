@@ -1,0 +1,85 @@
+<h2>Gestión de Productos</h2>
+
+<!-- Botón para abrir formulario -->
+<button (click)="abrirFormulario()">Agregar Producto</button>
+
+<!-- Tabla de Productos -->
+<table border="1">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Descripción</th>
+      <th>Categoría</th>
+      <th>Imagen</th>
+      <th>Precio</th>
+      <th>Stock</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let producto of productos">
+      <td>{{ producto.id }}</td>
+      <td>{{ producto.nombre }}</td>
+      <td>{{ producto.descripcion }}</td>
+      <td>{{ producto.categoria }}</td>
+      <td><img [src]="producto.imagen" width="50" alt="Imagen"></td>
+      <td>{{ producto.precio }}</td>
+      <td>{{ producto.stock }}</td>
+      <td>
+        <button (click)="abrirFormulario(producto)">Editar</button>
+        <button (click)="eliminarProducto(producto.id)">Eliminar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!-- Fondo oscuro del modal -->
+<div *ngIf="mostrarFormulario" class="backdrop" (click)="cerrarFormulario()"></div>
+
+<!-- Modal -->
+<div *ngIf="mostrarFormulario" class="modal">
+  <!-- Título centrado -->
+  <h3 class="modal-title">
+    {{ productoSeleccionado.id ? 'Editar Producto' : 'Agregar Producto' }}
+  </h3>
+
+  <!-- Contenedor de formulario -->
+  <div class="modal-body">
+    <div class="form-group">
+      <label>Nombre:</label>
+      <input [(ngModel)]="productoSeleccionado.nombre" type="text">
+    </div>
+
+    <div class="form-group">
+      <label>Descripción:</label>
+      <input [(ngModel)]="productoSeleccionado.descripcion" type="text">
+    </div>
+
+    <div class="form-group">
+      <label>Categoría:</label>
+      <input [(ngModel)]="productoSeleccionado.categoria" type="text">
+    </div>
+
+    <div class="form-group">
+      <label>Imagen URL:</label>
+      <input [(ngModel)]="productoSeleccionado.imagen" type="text">
+    </div>
+
+    <div class="form-group">
+      <label>Precio:</label>
+      <input [(ngModel)]="productoSeleccionado.precio" type="number">
+    </div>
+
+    <div class="form-group">
+      <label>Stock:</label>
+      <input [(ngModel)]="productoSeleccionado.stock" type="number">
+    </div>
+  </div>
+
+  <!-- Botones -->
+  <div class="modal-buttons">
+    <button class="save" (click)="guardarProducto()">Guardar</button>
+    <button class="cancel" (click)="cerrarFormulario()">Cancelar</button>
+  </div>
+</div>
+
